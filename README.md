@@ -1,8 +1,8 @@
-# lua-periphery v1.0.1
+# lua-periphery v1.0.2
 
 ## Linux Peripheral I/O (GPIO, SPI, I2C, MMIO, Serial) with Lua
 
-lua-periphery is a library for GPIO, SPI, I2C, MMIO, and Serial peripheral I/O interface access in userspace Linux. It is useful in embedded Linux environments (including BeagleBone, Raspberry Pi, etc. platforms) for interfacing with external peripherals. lua-periphery requires Lua 5.2 or greater, has no dependencies outside the standard C library and Linux, is portable across architectures, and is MIT licensed.
+lua-periphery is a library for GPIO, SPI, I2C, MMIO, and Serial peripheral I/O interface access in userspace Linux. It is useful in embedded Linux environments (including BeagleBone, Raspberry Pi, etc. platforms) for interfacing with external peripherals. lua-periphery requires Lua 5.1 or greater, has no dependencies outside the standard C library and Linux, is portable across architectures, and is MIT licensed.
 
 ## Installation
 
@@ -11,19 +11,25 @@ Build and install with luarocks:
 $ luarocks build lua-periphery
 ```
 
-Install x86_64 binary rock with luarocks:
+or Install a binary rock with luarocks:
 ``` console
-$ luarocks install https://github.com/vsergeev/lua-periphery/releases/download/v1.0.1/lua-periphery-1.0.1-1.linux-x86_64.rock
-```
+# Lua 5.2 / linux x86-64
+$ luarocks install https://github.com/vsergeev/lua-periphery/releases/download/v1.0.2/lua-periphery-1.0.2-1.lua-5.2.linux-x86_64.rock
 
-Install x86_32 binary rock with luarocks:
-``` console
-$ luarocks install https://github.com/vsergeev/lua-periphery/releases/download/v1.0.1/lua-periphery-1.0.1-1.linux-x86.rock
-```
+# Lua 5.2 / linux x86-32
+$ luarocks install https://github.com/vsergeev/lua-periphery/releases/download/v1.0.2/lua-periphery-1.0.2-1.lua-5.2.linux-x86.rock
 
-Install arm binary rock with luarocks:
-``` console
-$ luarocks install https://github.com/vsergeev/lua-periphery/releases/download/v1.0.1/lua-periphery-1.0.1-1.linux-arm.rock
+# Lua 5.2 / linux arm
+$ luarocks install https://github.com/vsergeev/lua-periphery/releases/download/v1.0.2/lua-periphery-1.0.2-1.lua-5.2.linux-arm.rock
+
+# Lua 5.1 / linux x86-64
+$ luarocks install https://github.com/vsergeev/lua-periphery/releases/download/v1.0.2/lua-periphery-1.0.2-1.lua-5.1.linux-x86_64.rock
+
+# Lua 5.1 / linux x86-32
+$ luarocks install https://github.com/vsergeev/lua-periphery/releases/download/v1.0.2/lua-periphery-1.0.2-1.lua-5.1.linux-x86.rock
+
+# Lua 5.1 / linux arm
+$ luarocks install https://github.com/vsergeev/lua-periphery/releases/download/v1.0.2/lua-periphery-1.0.2-1.lua-5.1.linux-arm.rock
 ```
 
 Build and install directly from source:
@@ -108,6 +114,8 @@ local rtc_hrs = rtc_mmio:read32(0x08)
 
 print(string.format("hours: %02x minutes: %02x seconds: %02x", rtc_secs, rtc_mins, rtc_hrs))
 
+rtc_mmio:close()
+
 --- Open am335x control module page
 local ctrl_mmio = MMIO(0x44E10000, 0x1000)
 
@@ -116,6 +124,8 @@ local mac_id0_lo = ctrl_mmio:read32(0x630)
 local mac_id0_hi = ctrl_mmio:read32(0x634)
 
 print(string.format("MAC address: %04x %08x", mac_id0_lo, mac_id0_hi))
+
+ctrl_mmio:close()
 ```
 
 [Go to MMIO documentation.](docs/mmio.md)
@@ -226,7 +236,7 @@ $
 
 ## Installation
 
-Place `periphery.so` in a directory searched by the Lua `package.path` variable. For example: `/usr/lib/lua/5.2/periphery`, the same directory as other Lua sources, etc.
+Place `periphery.so` in a directory searched by the Lua `package.cpath` variable. For example: `/usr/lib/lua/5.2/`, the same directory as other Lua sources, etc.
 
 lua-periphery can then be loaded in lua with `periphery = require('periphery')`.
 
