@@ -1,8 +1,6 @@
 /*
  * lua-periphery by vsergeev
- * Version 1.0.0 - May 2014
  * https://github.com/vsergeev/lua-periphery
- *
  * License: MIT
  */
 
@@ -14,7 +12,7 @@
 #include <unistd.h>
 
 #include "lua_periphery.h"
-#include "lua_51compat.h"
+#include "lua_compat.h"
 
 LUALIB_API int luaopen_periphery_gpio(lua_State *L);
 LUALIB_API int luaopen_periphery_spi(lua_State *L);
