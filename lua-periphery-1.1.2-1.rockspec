@@ -1,16 +1,16 @@
 -- This file was automatically generated for the LuaDist project.
 
 package = "lua-periphery"
-version = "1.1.1-1"
+version = "1.1.2-1"
 -- LuaDist source
 source = {
-  tag = "1.1.1-1",
+  tag = "1.1.2-1",
   url = "git://github.com/LuaDist-testing/lua-periphery.git"
 }
 -- Original source
 -- source = {
 --     url = "gitrec://github.com/vsergeev/lua-periphery",
---     tag = "v1.1.1",
+--     tag = "v1.1.2",
 -- }
 description = {
     summary = "Linux Peripheral I/O (GPIO, SPI, I2C, MMIO, Serial) with Lua",
