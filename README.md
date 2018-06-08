@@ -1,4 +1,4 @@
-# lua-periphery v1.0.6
+# lua-periphery [![Build Status](https://travis-ci.org/vsergeev/lua-periphery.svg?branch=master)](https://travis-ci.org/vsergeev/lua-periphery) [![GitHub release](https://img.shields.io/github/release/vsergeev/lua-periphery.svg?maxAge=7200)](https://github.com/vsergeev/lua-periphery) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/vsergeev/lua-periphery/blob/master/LICENSE)
 
 ## Linux Peripheral I/O (GPIO, SPI, I2C, MMIO, Serial) with Lua
 
@@ -138,9 +138,35 @@ Opening SPI device "/dev/spidev1.0": Permission denied [errno 13]
 > 
 ```
 
+#### Note about Lua 5.1
+
+The Lua 5.1 interpreter will render the string representation of table objects
+thrown by errors in scripts, but not in the interactive console:
+
+``` lua
+> periphery = require('periphery')
+> gpio = periphery.GPIO(14)
+(error object is not a string)
+> 
+```
+
+In the interactive console, these errors must be caught with `pcall()` and
+evaluated explicitly to be rendered:
+
+``` lua
+> periphery = require('periphery')
+> gpio, err = pcall(periphery.GPIO, 14)
+> =err
+Exporting GPIO: opening 'export': Permission denied [errno 13]
+> 
+```
+
+This only applies to Lua 5.1. LuaJIT and Lua 5.2 onwards automatically
+stringify error table objects thrown to the interactive console.
+
 ## Documentation
 
-`man` page style documentation for each interface wrapper is available in [docs](docs/) folder.
+`man` page style documentation for each interface is available in [docs](docs/) folder.
 
 ## Installation
 
@@ -148,47 +174,6 @@ Opening SPI device "/dev/spidev1.0": Permission denied [errno 13]
 
 ``` console
 $ sudo luarocks install lua-periphery
-```
-
-Cross-compile with `CC=arm-linux-gnueabihf-gcc luarocks build lua-periphery`. Your target's sysroot must provide the Lua includes.
-
-
-#### Install a pre-built binary rock with LuaRocks
-
-Lua 5.3 / Linux x86_64
-``` console
-$ wget https://github.com/vsergeev/lua-periphery/releases/download/v1.0.5/lua-periphery-1.0.5-1.lua-5.3.linux-x86_64.rock -O lua-periphery-1.0.5-1.linux-x86_64.rock
-$ sudo luarocks install lua-periphery-1.0.5-1.linux-x86_64.rock
-```
-
-Lua 5.3 / Linux armv7l
-``` console
-$ wget https://github.com/vsergeev/lua-periphery/releases/download/v1.0.5/lua-periphery-1.0.5-1.lua-5.3.linux-armv7l.rock -O lua-periphery-1.0.5-1.linux-armv7l.rock
-$ sudo luarocks install lua-periphery-1.0.5-1.linux-armv7l.rock
-```
-
-Lua 5.2 / Linux x86_64
-``` console
-$ wget https://github.com/vsergeev/lua-periphery/releases/download/v1.0.5/lua-periphery-1.0.5-1.lua-5.2.linux-x86_64.rock -O lua-periphery-1.0.5-1.linux-x86_64.rock
-$ sudo luarocks install lua-periphery-1.0.5-1.linux-x86_64.rock
-```
-
-Lua 5.2 / Linux armv7l
-``` console
-$ wget https://github.com/vsergeev/lua-periphery/releases/download/v1.0.5/lua-periphery-1.0.5-1.lua-5.2.linux-armv7l.rock -O lua-periphery-1.0.5-1.linux-armv7l.rock
-$ sudo luarocks install lua-periphery-1.0.5-1.linux-armv7l.rock
-```
-
-Lua 5.1 / Linux x86_64
-``` console
-$ wget https://github.com/vsergeev/lua-periphery/releases/download/v1.0.5/lua-periphery-1.0.5-1.lua-5.1.linux-x86_64.rock -O lua-periphery-1.0.5-1.linux-x86_64.rock
-$ sudo luarocks install lua-periphery-1.0.5-1.linux-x86_64.rock
-```
-
-Lua 5.1 / Linux armv7l
-``` console
-$ wget https://github.com/vsergeev/lua-periphery/releases/download/v1.0.5/lua-periphery-1.0.5-1.lua-5.1.linux-armv7l.rock -O lua-periphery-1.0.5-1.linux-armv7l.rock
-$ sudo luarocks install lua-periphery-1.0.5-1.linux-armv7l.rock
 ```
 
 #### Build and install from source
